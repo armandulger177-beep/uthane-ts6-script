@@ -39,7 +39,6 @@
             min-height: 100vh; overflow-x: hidden; transition: 0.5s;
         }
 
-        /* PERFORMANS DOSTU ARKA PLAN */
         .bg-glow {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
             background: radial-gradient(circle at 10% 40%, var(--glow-1), transparent 35%),
@@ -59,31 +58,40 @@
         .nav-links a:hover { color: var(--accent-1); }
         .theme-select { background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--glass-border); padding: 5px 10px; border-radius: 8px; cursor: pointer; }
 
-        /* --- SECTIONS --- */
         section { padding: 120px 20px 60px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
         h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 10px; background: linear-gradient(to right, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .subtitle { font-size: 1.1rem; color: var(--text-sub); margin-bottom: 3rem; }
 
-        /* --- GALERİ TASARIMI --- */
-        .gallery-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
-        }
+        /* --- GALERİ VE TAM EKRAN MODALI --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
         .gallery-item {
             position: relative; border-radius: 15px; overflow: hidden;
             border: 1px solid var(--glass-border); background: var(--glass-bg);
-            transition: 0.3s;
+            transition: 0.3s; cursor: zoom-in;
         }
-        .gallery-item:hover { transform: translateY(-8px); border-color: var(--accent-1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .gallery-item img { width: 100%; display: block; height: auto; transition: 0.5s; }
-        .gallery-cap {
-            padding: 15px; font-size: 0.9rem; font-weight: 600; color: var(--accent-1);
-            background: rgba(0,0,0,0.4); border-top: 1px solid var(--glass-border);
+        .gallery-item:hover { transform: translateY(-8px); border-color: var(--accent-1); }
+        .gallery-item img { width: 100%; display: block; height: auto; }
+        .gallery-cap { padding: 12px; font-size: 0.85rem; font-weight: 600; color: var(--accent-1); background: rgba(0,0,0,0.4); }
+
+        /* Modal (Tam Ekran Arka Planı) */
+        .modal {
+            display: none; position: fixed; z-index: 1000; padding-top: 50px;
+            left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            margin: auto; display: block; width: 85%; max-width: 1200px;
+            border-radius: 15px; border: 2px solid var(--accent-1);
+            animation: zoom 0.3s;
+        }
+        @keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
+        .close-modal {
+            position: absolute; top: 20px; right: 35px; color: #fff;
+            font-size: 40px; font-weight: bold; cursor: pointer;
         }
 
         /* --- TERMİNAL VE DİĞERLERİ --- */
-        .terminal-wrapper {
-            background: var(--term-bg); border-radius: 12px; border: 1px solid #333; overflow: hidden; margin-bottom: 40px;
-        }
+        .terminal-wrapper { background: var(--term-bg); border-radius: 12px; border: 1px solid #333; overflow: hidden; margin-bottom: 40px; }
         .terminal-header { background: var(--term-header); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-size: 0.8rem; }
         .copy-btn { background: var(--accent-2); color: white; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
         .terminal-body { padding: 20px; color: var(--term-text); font-family: monospace; text-align: left; overflow-x: auto; white-space: nowrap; }
@@ -92,7 +100,8 @@
         .contact-box h3 { margin: 5px 0 0 0; font-size: 1.6rem; color: var(--text-main); }
         .contact-box span { color: var(--accent-1); }
 
-        @media (max-width: 768px) { .nav-links { display: none; } h1 { font-size: 2.5rem; } }
+        .footer { padding: 2rem; font-size: 0.85rem; color: #64748b; text-align: center; }
+        @media (max-width: 768px) { .nav-links { display: none; } h1 { font-size: 2.5rem; } .modal-content { width: 95%; } }
     </style>
 </head>
 <body>
@@ -103,14 +112,12 @@
         <a href="#home" class="nav-logo">UTHANE ELITE</a>
         <div class="nav-links">
             <a href="#home">Kurulum</a>
-            <a href="#features">Özellikler</a>
             <a href="#gallery">Arayüz</a>
         </div>
         <select class="theme-select" id="themeSelect" onchange="changeTheme()">
             <option value="dark">Elite Dark</option>
             <option value="cyber">Cyber Neon</option>
             <option value="gold">Royal Gold</option>
-            <option value="light">Arctic Light</option>
         </select>
     </nav>
 
@@ -120,7 +127,7 @@
         
         <div class="terminal-wrapper">
             <div class="terminal-header">
-                <span>root@uthane:~# Tek Komutla 2 Saatlik Ücretsiz Testi Başlat</span>
+                <span>root@uthane:~# Komutu Kopyalayıp Terminale Yapıştırın</span>
                 <button class="copy-btn" onclick="copyCode()" id="copyBtn">Kopyala</button>
             </div>
             <div class="terminal-body" id="codeText">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</div>
@@ -135,42 +142,46 @@
     <section id="gallery">
         <h2 style="font-size: 2.5rem; margin-bottom: 3rem;">Panelden Kareler</h2>
         <div class="gallery-grid">
-            <div class="gallery-item">
+            <div class="gallery-item" onclick="openModal(this)">
                 <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/login.png" alt="Giriş Ekranı">
                 <div class="gallery-cap">Siber Komuta Giriş Ekranı</div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" onclick="openModal(this)">
                 <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/genel-bakis.png" alt="Genel Bakış">
                 <div class="gallery-cap">Genel İstatistik Panosu</div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" onclick="openModal(this)">
                 <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/oda-yonetimi.png" alt="Oda Yönetimi">
                 <div class="gallery-cap">Gelişmiş Oda & Kanal Yönetimi</div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" onclick="openModal(this)">
                 <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/roller.png" alt="Rol Yönetimi">
                 <div class="gallery-cap">Yetki Grubu (Rol) Düzenleyici</div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" onclick="openModal(this)">
                 <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/giris-cikis.png" alt="Kayıtlar">
                 <div class="gallery-cap">Detaylı Bağlantı Arşivi</div>
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item" onclick="openModal(this)">
                 <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/ayarlar.png" alt="Sistem Ayarları">
                 <div class="gallery-cap">Kritik Sunucu & Güvenlik Ayarları</div>
             </div>
         </div>
     </section>
 
-    <div class="footer">
-        &copy; 2026 Uthane Script Elite. Tüm Hakları Saklıdır.
+    <div id="imageModal" class="modal" onclick="this.style.display='none'">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="fullImg">
     </div>
+
+    <div class="footer">&copy; 2026 Uthane Script Elite. Tüm Hakları Saklıdır.</div>
 
     <script>
         function changeTheme() {
             const selectedTheme = document.getElementById('themeSelect').value;
             document.documentElement.setAttribute('data-theme', selectedTheme);
         }
+
         function copyCode() {
             const code = document.getElementById('codeText').innerText;
             navigator.clipboard.writeText(code).then(() => {
@@ -179,6 +190,14 @@
                 btn.style.background = "#10b981";
                 setTimeout(() => { btn.innerText = "Kopyala"; btn.style.background = "var(--accent-2)"; }, 2000);
             });
+        }
+
+        // TAM EKRAN MODAL FONKSİYONLARI
+        function openModal(element) {
+            const modal = document.getElementById("imageModal");
+            const fullImg = document.getElementById("fullImg");
+            modal.style.display = "block";
+            fullImg.src = element.querySelector("img").src;
         }
     </script>
 </body>
