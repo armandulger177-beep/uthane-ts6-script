@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uthane Script Elite | TS6 & Web Panel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* Arka plandaki neon isiklar */
+        .glow-circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #06b6d4;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            top: -100px;
+            left: -100px;
+            z-index: 0;
+        }
+        .glow-circle-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            bottom: -150px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 2rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .feature-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .code-box {
+            background: #000000;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-family: monospace;
+            color: #10b981;
+            font-size: 1.1rem;
+            border: 1px solid #333;
+            position: relative;
+            margin-bottom: 2rem;
+            text-align: left;
+            overflow-x: auto;
+        }
+
+        .code-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #a855f7;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(to right, #0ea5e9, #6366f1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+        }
+
+        .footer {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-circle"></div>
+    <div class="glow-circle-2"></div>
+
+    <div class="container">
+        <h1>UTHANE ELITE</h1>
+        <h2>Tek Tuşla TeamSpeak 6 & Web Panel Kurulumu</h2>
+
+        <div class="glass-card">
+            <div class="features">
+                <span class="feature-badge">⚡ Otonom Kurulum</span>
+                <span class="feature-badge">🛡️ HWID Koruması</span>
+                <span class="feature-badge">🎨 Glassmorphism Panel</span>
+                <span class="feature-badge">🤖 Telegram Bot</span>
+            </div>
+
+            <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; font-size: 1.1rem;">
+                Sunucunuzu saniyeler içinde ayağa kaldırın. Chat fix, oda hiyerarşisi ve elit yönetim paneli tek bir komutta.
+                Aşağıdaki komutu sunucunuza yapıştırın ve <b>2 Saatlik Otomatik Testinizi</b> hemen başlatın!
+            </p>
+
+            <div class="code-box">
+                <span class="code-label">Linux Terminal Komutu</span>
+                wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum
+            </div>
+
+            <a href="https://discord.gg/SENIN-DISCORD-LINKIN" class="btn" target="_blank">Satın Al / Discord</a>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Uthane Script. Tüm Hakları Saklıdır.
+        </div>
+    </div>
+
+</body>
+</html>
