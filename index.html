@@ -7,7 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
         
-        /* --- TEMA DEĞİŞKENLERİ --- */
+        /* --- TEMA VE RENK AYARLARI --- */
         :root {
             --bg-1: #0f172a; --bg-2: #1e1b4b;
             --text-main: #ffffff; --text-sub: #cbd5e1;
@@ -15,145 +15,84 @@
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
             --term-bg: #000000; --term-text: #10b981; --term-header: #1e293b;
-            --glow-1: #06b6d433; --glow-2: #8b5cf633;
+            --glow-1: #06b6d422; --glow-2: #8b5cf622;
         }
 
         [data-theme="cyber"] {
             --bg-1: #050505; --bg-2: #0a0a0a;
             --accent-1: #00ffcc; --accent-2: #ff00ff;
             --glass-bg: rgba(0, 255, 204, 0.05); --glass-border: rgba(0, 255, 204, 0.3);
-            --term-text: #00ffcc; --glow-1: #00ffcc22; --glow-2: #ff00ff22;
+            --term-text: #00ffcc; --glow-1: #00ffcc15; --glow-2: #ff00ff15;
         }
 
         [data-theme="gold"] {
             --bg-1: #1a1612; --bg-2: #2d2417;
             --accent-1: #ffd700; --accent-2: #d4af37;
             --glass-bg: rgba(255, 215, 0, 0.05); --glass-border: rgba(255, 215, 0, 0.3);
-            --term-text: #ffd700; --glow-1: #ffd70022; --glow-2: #d4af3722;
-        }
-
-        [data-theme="light"] {
-            --bg-1: #f8fafc; --bg-2: #e2e8f0;
-            --text-main: #0f172a; --text-sub: #334155;
-            --accent-1: #0284c7; --accent-2: #4f46e5;
-            --glass-bg: rgba(255, 255, 255, 0.7); --glass-border: rgba(0, 0, 0, 0.1);
-            --term-bg: #1e293b; --glow-1: #0284c722; --glow-2: #4f46e522;
+            --term-text: #ffd700; --glow-1: #ffd70015; --glow-2: #d4af3715;
         }
 
         html { scroll-behavior: smooth; }
-
         body {
             margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-1);
-            color: var(--text-main); min-height: 100vh;
-            overflow-x: hidden; transition: background-color 0.5s ease, color 0.5s ease;
+            background-color: var(--bg-1); color: var(--text-main);
+            min-height: 100vh; overflow-x: hidden; transition: 0.5s;
         }
 
-        /* PERFORMANSLI ARKA PLAN IŞIKLARI (Kasma Yapmaz) */
+        /* PERFORMANS DOSTU ARKA PLAN */
         .bg-glow {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
-            background: radial-gradient(circle at 15% 50%, var(--glow-1), transparent 40%),
-                        radial-gradient(circle at 85% 30%, var(--glow-2), transparent 40%);
-            transition: background 0.5s ease;
+            background: radial-gradient(circle at 10% 40%, var(--glow-1), transparent 35%),
+                        radial-gradient(circle at 90% 20%, var(--glow-2), transparent 35%);
+            transition: 0.8s;
         }
 
-        /* --- ÜST MENÜ (NAVBAR) --- */
+        /* --- NAVBAR --- */
         .navbar {
             position: fixed; top: 0; width: 100%; z-index: 100;
-            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border);
-            display: flex; justify-content: space-around; align-items: center; padding: 15px 0;
-            transition: all 0.5s ease;
+            display: flex; justify-content: space-around; align-items: center; padding: 12px 0;
         }
-        .nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--accent-1); text-decoration: none; }
-        .nav-links a {
-            color: var(--text-sub); text-decoration: none; margin: 0 15px;
-            font-weight: 600; transition: color 0.3s;
-        }
+        .nav-logo { font-size: 1.4rem; font-weight: 800; color: var(--accent-1); text-decoration: none; letter-spacing: 2px; }
+        .nav-links a { color: var(--text-sub); text-decoration: none; margin: 0 15px; font-weight: 600; transition: 0.3s; }
         .nav-links a:hover { color: var(--accent-1); }
-        
-        .theme-select {
-            background: rgba(0,0,0,0.3); color: var(--text-main); border: 1px solid var(--glass-border);
-            padding: 5px 10px; border-radius: 8px; font-family: 'Poppins', sans-serif; cursor: pointer;
-        }
-        .theme-select option { background: #1e1b4b; color: #fff; }
+        .theme-select { background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--glass-border); padding: 5px 10px; border-radius: 8px; cursor: pointer; }
 
-        /* --- ANA KONTEYNER VE BÖLÜMLER --- */
-        section { padding: 100px 20px 40px 20px; max-width: 1000px; margin: 0 auto; text-align: center; }
-        
-        h1 {
-            font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--accent-1), var(--accent-2));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .subtitle { font-size: 1.2rem; font-weight: 300; color: var(--text-sub); margin-bottom: 2rem; }
+        /* --- SECTIONS --- */
+        section { padding: 120px 20px 60px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
+        h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 10px; background: linear-gradient(to right, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { font-size: 1.1rem; color: var(--text-sub); margin-bottom: 3rem; }
 
-        .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border); border-radius: 20px;
-            padding: 2.5rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); transition: all 0.5s ease;
-        }
-
-        /* --- TERMİNAL KOD ALANI --- */
-        .terminal-wrapper {
-            background: var(--term-bg); border-radius: 10px; border: 1px solid #333;
-            margin-bottom: 1.5rem; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        .terminal-header {
-            background: var(--term-header); padding: 10px 15px; display: flex;
-            justify-content: space-between; align-items: center; font-size: 0.85rem; color: #94a3b8; border-bottom: 1px solid #333;
-        }
-        .copy-btn {
-            background: var(--accent-2); color: white; border: none; padding: 5px 12px;
-            border-radius: 5px; cursor: pointer; font-weight: 600; transition: 0.3s;
-        }
-        .copy-btn:hover { filter: brightness(1.2); }
-        .terminal-body {
-            padding: 1.5rem; font-family: 'Courier New', monospace; color: var(--term-text);
-            text-align: left; font-size: 1rem; overflow-x: auto; white-space: nowrap;
-        }
-        .terminal-body::-webkit-scrollbar { height: 8px; }
-        .terminal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-
-        /* --- ÖZELLİKLER (PROMO) ALANI --- */
-        .promo-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem; margin-top: 2rem; text-align: left;
-        }
-        .promo-card {
-            background: rgba(0, 0, 0, 0.2); border: 1px solid var(--glass-border);
-            padding: 1.5rem; border-radius: 15px; transition: 0.3s ease;
-        }
-        .promo-card:hover { transform: translateY(-5px); border-color: var(--accent-1); }
-        .promo-card h3 { margin-top: 0; color: var(--accent-1); font-size: 1.2rem; }
-        .promo-card p { margin: 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.5; }
-
-        /* --- GALERİ ALANI --- */
-        .section-title { font-size: 2.5rem; margin-bottom: 2rem; color: var(--text-main); }
+        /* --- GALERİ TASARIMI --- */
         .gallery-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
         }
-        .gallery-img {
-            width: 100%; border-radius: 15px; border: 2px solid var(--glass-border);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: transform 0.3s ease;
+        .gallery-item {
+            position: relative; border-radius: 15px; overflow: hidden;
+            border: 1px solid var(--glass-border); background: var(--glass-bg);
+            transition: 0.3s;
         }
-        .gallery-img:hover { transform: scale(1.03); border-color: var(--accent-1); }
+        .gallery-item:hover { transform: translateY(-8px); border-color: var(--accent-1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .gallery-item img { width: 100%; display: block; height: auto; transition: 0.5s; }
+        .gallery-cap {
+            padding: 15px; font-size: 0.9rem; font-weight: 600; color: var(--accent-1);
+            background: rgba(0,0,0,0.4); border-top: 1px solid var(--glass-border);
+        }
 
-        /* --- İLETİŞİM KUTUSU --- */
-        .contact-box {
-            margin-top: 2.5rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px; border: 1px dashed var(--accent-1); display: inline-block;
+        /* --- TERMİNAL VE DİĞERLERİ --- */
+        .terminal-wrapper {
+            background: var(--term-bg); border-radius: 12px; border: 1px solid #333; overflow: hidden; margin-bottom: 40px;
         }
-        .contact-box p { margin: 0 0 5px 0; color: var(--text-sub); font-size: 0.9rem;}
-        .contact-box h3 { margin: 0; font-size: 1.5rem; color: var(--text-main); letter-spacing: 1px; }
+        .terminal-header { background: var(--term-header); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-size: 0.8rem; }
+        .copy-btn { background: var(--accent-2); color: white; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .terminal-body { padding: 20px; color: var(--term-text); font-family: monospace; text-align: left; overflow-x: auto; white-space: nowrap; }
+
+        .contact-box { padding: 20px; background: rgba(0,0,0,0.2); border-radius: 15px; border: 1px dashed var(--accent-1); display: inline-block; margin-top: 20px; }
+        .contact-box h3 { margin: 5px 0 0 0; font-size: 1.6rem; color: var(--text-main); }
         .contact-box span { color: var(--accent-1); }
-        
-        .footer { padding: 2rem; font-size: 0.85rem; color: #64748b; text-align: center; }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* Mobilde menü linklerini gizler, sadece logo ve tema kalır */
-            .gallery-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 768px) { .nav-links { display: none; } h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
@@ -161,11 +100,11 @@
     <div class="bg-glow"></div>
 
     <nav class="navbar">
-        <a href="#home" class="nav-logo">UTHANE</a>
+        <a href="#home" class="nav-logo">UTHANE ELITE</a>
         <div class="nav-links">
             <a href="#home">Kurulum</a>
             <a href="#features">Özellikler</a>
-            <a href="#gallery">Galeri</a>
+            <a href="#gallery">Arayüz</a>
         </div>
         <select class="theme-select" id="themeSelect" onchange="changeTheme()">
             <option value="dark">Elite Dark</option>
@@ -176,60 +115,50 @@
     </nav>
 
     <section id="home">
-        <h1>UTHANE ELITE</h1>
-        <div class="subtitle">Profesyoneller İçin Otonom TS6 Altyapısı</div>
-
-        <div class="glass-card">
-            <p style="color: var(--text-sub); line-height: 1.6; margin-bottom: 2rem; font-size: 1.05rem;">
-                Aşağıdaki kurulum komutunu Ubuntu sunucunuza yapıştırın. Sistem donanımınızı tanıyacak ve <b>2 Saatlik Ücretsiz Test Lisansınızı</b> anında aktif edecektir.
-            </p>
-
-            <div class="terminal-wrapper">
-                <div class="terminal-header">
-                    <span>root@ubuntu:~# Komutu Kopyalayıp Terminale Yapıştırın</span>
-                    <button class="copy-btn" onclick="copyCode()" id="copyBtn">Kopyala</button>
-                </div>
-                <div class="terminal-body" id="codeText">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</div>
+        <h1>SİBER KOMUTA MERKEZİ</h1>
+        <div class="subtitle">TeamSpeak 6'nın En Gelişmiş Yönetim Altyapısı</div>
+        
+        <div class="terminal-wrapper">
+            <div class="terminal-header">
+                <span>root@uthane:~# Tek Komutla 2 Saatlik Ücretsiz Testi Başlat</span>
+                <button class="copy-btn" onclick="copyCode()" id="copyBtn">Kopyala</button>
             </div>
-
-            <div class="contact-box">
-                <p>Destek & Satın Alım İçin İletişim Adresimiz:</p>
-                <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
-            </div>
+            <div class="terminal-body" id="codeText">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</div>
         </div>
-    </section>
 
-    <section id="features">
-        <h2 class="section-title">Sistem Özellikleri</h2>
-        <div class="promo-grid">
-            <div class="promo-card">
-                <h3>⚡ Tek Tuşla Kurulum</h3>
-                <p>TS6 Beta8 kurulumu, UFW güvenlik duvarı ve port ayarları tamamen otonom olarak arka planda halledilir.</p>
-            </div>
-            <div class="promo-card">
-                <h3>🎨 Elite Panel</h3>
-                <p>Modern, karanlık temalı ve glassmorphism arayüz ile sunucunuzu tarayıcınızdan kolayca yönetin.</p>
-            </div>
-            <div class="promo-card">
-                <h3>🛠️ Oto-Patch Sistemi</h3>
-                <p>Hazır oda hiyerarşisi, 'serveradmin' gizleme ve Türkçe karakter fixleri kurulumda otomatik atılır.</p>
-            </div>
-            <div class="promo-card">
-                <h3>🛡️ Üst Düzey Güvenlik</h3>
-                <p>Telegram bot entegrasyonu ile panel girişleri cebinize gelir. HWID kalkanı ile yetkisiz kopyalamalar engellenir.</p>
-            </div>
+        <div class="contact-box">
+            <p style="margin:0; font-size: 0.9rem; color: var(--text-sub);">7/24 Destek & Bilgi:</p>
+            <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
         </div>
     </section>
 
     <section id="gallery">
-        <h2 class="section-title">Panel Arayüzü</h2>
-        <p class="subtitle" style="margin-top:-15px;">Farklı temalara sahip Elite Panel'den kareler.</p>
-        
+        <h2 style="font-size: 2.5rem; margin-bottom: 3rem;">Panelden Kareler</h2>
         <div class="gallery-grid">
-            <img src="https://via.placeholder.com/800x450/1e1b4b/22d3ee?text=Elite+Dark+Tema+Gorseli+Buraya" alt="Dark Tema" class="gallery-img">
-            <img src="https://via.placeholder.com/800x450/050505/00ffcc?text=Cyber+Neon+Tema+Gorseli+Buraya" alt="Cyber Tema" class="gallery-img">
-            <img src="https://via.placeholder.com/800x450/1a1612/ffd700?text=Royal+Gold+Tema+Gorseli+Buraya" alt="Gold Tema" class="gallery-img">
-            <img src="https://via.placeholder.com/800x450/1e293b/10b981?text=Telegram+Bot+Bildirim+Gorseli" alt="Telegram Bot" class="gallery-img">
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/login.png" alt="Giriş Ekranı">
+                <div class="gallery-cap">Siber Komuta Giriş Ekranı</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/genel-bakis.png" alt="Genel Bakış">
+                <div class="gallery-cap">Genel İstatistik Panosu</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/oda-yonetimi.png" alt="Oda Yönetimi">
+                <div class="gallery-cap">Gelişmiş Oda & Kanal Yönetimi</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/roller.png" alt="Rol Yönetimi">
+                <div class="gallery-cap">Yetki Grubu (Rol) Düzenleyici</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/giris-cikis.png" alt="Kayıtlar">
+                <div class="gallery-cap">Detaylı Bağlantı Arşivi</div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/ayarlar.png" alt="Sistem Ayarları">
+                <div class="gallery-cap">Kritik Sunucu & Güvenlik Ayarları</div>
+            </div>
         </div>
     </section>
 
@@ -242,257 +171,13 @@
             const selectedTheme = document.getElementById('themeSelect').value;
             document.documentElement.setAttribute('data-theme', selectedTheme);
         }
-
         function copyCode() {
             const code = document.getElementById('codeText').innerText;
             navigator.clipboard.writeText(code).then(() => {
                 const btn = document.getElementById('copyBtn');
                 btn.innerText = "Kopyalandı!";
                 btn.style.background = "#10b981";
-                setTimeout(() => {
-                    btn.innerText = "Kopyala";
-                    btn.style.background = "var(--accent-2)";
-                }, 2000);
-            });
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="tr" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uthane Script Elite | TS6 & Web Panel</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-        
-        /* --- TEMA DEĞİŞKENLERİ --- */
-        :root {
-            --bg-1: #0f172a; --bg-2: #1e1b4b;
-            --text-main: #ffffff; --text-sub: #cbd5e1;
-            --accent-1: #22d3ee; --accent-2: #a855f7;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --term-bg: #000000; --term-text: #10b981; --term-header: #1e293b;
-            /* Arka Plan Işık Renkleri */
-            --glow-1: rgba(6, 182, 212, 0.4); 
-            --glow-2: rgba(139, 92, 246, 0.4);
-        }
-
-        [data-theme="cyber"] {
-            --bg-1: #050505; --bg-2: #0a0a0a;
-            --accent-1: #00ffcc; --accent-2: #ff00ff;
-            --glass-bg: rgba(0, 255, 204, 0.05);
-            --glass-border: rgba(0, 255, 204, 0.3);
-            --term-text: #00ffcc;
-            --glow-1: rgba(0, 255, 204, 0.3); 
-            --glow-2: rgba(255, 0, 255, 0.3);
-        }
-
-        [data-theme="gold"] {
-            --bg-1: #1a1612; --bg-2: #2d2417;
-            --accent-1: #ffd700; --accent-2: #d4af37;
-            --glass-bg: rgba(255, 215, 0, 0.05);
-            --glass-border: rgba(255, 215, 0, 0.3);
-            --term-text: #ffd700;
-            --glow-1: rgba(255, 215, 0, 0.3); 
-            --glow-2: rgba(212, 175, 55, 0.3);
-        }
-
-        [data-theme="light"] {
-            --bg-1: #f8fafc; --bg-2: #e2e8f0;
-            --text-main: #0f172a; --text-sub: #334155;
-            --accent-1: #0284c7; --accent-2: #4f46e5;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(0, 0, 0, 0.1);
-            --term-bg: #1e293b;
-            --glow-1: rgba(2, 132, 199, 0.2); 
-            --glow-2: rgba(79, 70, 229, 0.2);
-        }
-
-        body {
-            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
-            color: var(--text-main); min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            overflow-x: hidden; transition: background 0.5s ease, color 0.5s ease;
-        }
-
-        /* --- HAREKETLİ ARKA PLAN IŞIKLARI --- */
-        .glow-circle {
-            position: fixed; border-radius: 50%; filter: blur(120px);
-            z-index: 0; transition: background 0.5s ease; pointer-events: none;
-        }
-        .c1 {
-            width: 400px; height: 400px; background: var(--glow-1);
-            top: -100px; left: -100px; animation: float1 15s infinite alternate;
-        }
-        .c2 {
-            width: 500px; height: 500px; background: var(--glow-2);
-            bottom: -150px; right: -150px; animation: float2 20s infinite alternate;
-        }
-
-        @keyframes float1 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 100px) scale(1.2); }
-        }
-        @keyframes float2 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-100px, -150px) scale(1.1); }
-        }
-
-        /* --- TEMA SEÇİCİ --- */
-        .theme-switcher { position: absolute; top: 20px; right: 20px; z-index: 10; }
-        .theme-select {
-            background: var(--glass-bg); color: var(--text-main); border: 1px solid var(--glass-border);
-            padding: 8px 15px; border-radius: 8px; font-family: 'Poppins', sans-serif;
-            outline: none; cursor: pointer; backdrop-filter: blur(10px);
-        }
-        .theme-select option { background: #1e1b4b; color: #fff; }
-
-        /* --- ANA KONTEYNER --- */
-        .container { position: relative; z-index: 1; max-width: 1000px; text-align: center; padding: 2rem; margin-top: 40px; }
-        
-        h1 {
-            font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--accent-1), var(--accent-2));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        h2 { font-size: 1.5rem; font-weight: 300; color: var(--text-sub); margin-bottom: 2rem; }
-
-        .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border); border-radius: 20px;
-            padding: 2.5rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.5s ease;
-        }
-
-        /* --- TERMİNAL KOD ALANI --- */
-        .terminal-wrapper {
-            background: var(--term-bg); border-radius: 10px; border: 1px solid #333;
-            margin-bottom: 1.5rem; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        .terminal-header {
-            background: var(--term-header); padding: 10px 15px; display: flex;
-            justify-content: space-between; align-items: center; font-size: 0.85rem; color: #94a3b8; border-bottom: 1px solid #333;
-        }
-        .copy-btn {
-            background: var(--accent-2); color: white; border: none; padding: 5px 12px;
-            border-radius: 5px; cursor: pointer; font-weight: 600; transition: 0.3s;
-        }
-        .copy-btn:hover { filter: brightness(1.2); }
-        .terminal-body {
-            padding: 1.5rem; font-family: 'Courier New', monospace; color: var(--term-text);
-            text-align: left; font-size: 1rem; overflow-x: auto; white-space: nowrap;
-        }
-        .terminal-body::-webkit-scrollbar { height: 8px; }
-        .terminal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-
-        /* --- TANITIM VE ÖZELLİK KARTLARI (YENİ EKLENDİ) --- */
-        .promo-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem; margin-top: 2rem; text-align: left;
-        }
-        .promo-card {
-            background: rgba(0, 0, 0, 0.2); border: 1px solid var(--glass-border);
-            padding: 1.5rem; border-radius: 15px; transition: 0.3s ease;
-        }
-        .promo-card:hover { transform: translateY(-5px); border-color: var(--accent-1); }
-        .promo-card h3 { margin-top: 0; color: var(--accent-1); font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
-        .promo-card p { margin: 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.5; }
-
-        /* --- İLETİŞİM KUTUSU --- */
-        .contact-box {
-            margin-top: 2.5rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px; border: 1px dashed var(--accent-1); display: inline-block;
-        }
-        .contact-box p { margin: 0 0 5px 0; color: var(--text-sub); font-size: 0.9rem;}
-        .contact-box h3 { margin: 0; font-size: 1.5rem; color: var(--text-main); letter-spacing: 1px; }
-        .contact-box span { color: var(--accent-1); }
-        
-        .footer { margin-top: 3rem; margin-bottom: 2rem; font-size: 0.85rem; color: #64748b; text-align: center;}
-    </style>
-</head>
-<body>
-
-    <div class="glow-circle c1"></div>
-    <div class="glow-circle c2"></div>
-
-    <div class="theme-switcher">
-        <select class="theme-select" id="themeSelect" onchange="changeTheme()">
-            <option value="dark">Elite Dark (Varsayılan)</option>
-            <option value="cyber">Cyber Neon</option>
-            <option value="gold">Royal Gold</option>
-            <option value="light">Arctic Light</option>
-        </select>
-    </div>
-
-    <div class="container">
-        <h1>UTHANE ELITE</h1>
-        <h2>Profesyoneller İçin Otonom TS6 Altyapısı</h2>
-
-        <div class="glass-card">
-            
-            <p style="color: var(--text-sub); line-height: 1.6; margin-bottom: 2rem; font-size: 1.05rem;">
-                Linux bilginiz olmasına gerek yok. Aşağıdaki kurulum komutunu sunucunuza yapıştırın ve arkanıza yaslanın. Sistem donanımınızı tanıyacak ve <b>2 Saatlik Ücretsiz Test Lisansınızı</b> anında aktif edecektir.
-            </p>
-
-            <div class="terminal-wrapper">
-                <div class="terminal-header">
-                    <span>root@ubuntu:~# Kurulum Komutu</span>
-                    <button class="copy-btn" onclick="copyCode()" id="copyBtn">Kopyala</button>
-                </div>
-                <div class="terminal-body" id="codeText">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</div>
-            </div>
-
-            <div class="promo-grid">
-                <div class="promo-card">
-                    <h3>⚡ Tek Tuşla Kurulum</h3>
-                    <p>TS6 Beta8 kurulumu, UFW güvenlik duvarı ayarları ve port açma işlemleri sistem tarafından tamamen otonom bir şekilde halledilir.</p>
-                </div>
-                <div class="promo-card">
-                    <h3>🎨 Glassmorphism Panel</h3>
-                    <p>Sunucunuzu siyah ekrandan kurtarın! Modern, karanlık temalı ve elit bir web arayüzü ile sunucunuzu tarayıcı üzerinden kolayca yönetin.</p>
-                </div>
-                <div class="promo-card">
-                    <h3>🛠️ Chat & Karakter Yaması</h3>
-                    <p>Klasik sorunlara elveda. 'serveradmin' isminin gizlenmesi ve Türkçe karakter/chat bozulmaları script tarafından kalıcı olarak yamalanır.</p>
-                </div>
-                <div class="promo-card">
-                    <h3>🛡️ Üst Düzey Güvenlik</h3>
-                    <p>Panelinizdeki tüm girişler ve işlemler Telegram Botu ile anlık cebinize gelir. HWID ve IP bazlı lisanslama ile yetkisiz erişimler engellenir.</p>
-                </div>
-            </div>
-
-            <div class="contact-box">
-                <p>Destek & Satın Alım İçin İletişim Adresimiz:</p>
-                <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
-            </div>
-            
-        </div>
-        
-        <div class="footer">
-            &copy; 2026 Uthane Script. Tüm Hakları Saklıdır.<br>
-            Sistem sadece Ubuntu 20.04 ve 22.04 LTS sürümlerinde desteklenmektedir.
-        </div>
-    </div>
-
-    <script>
-        function changeTheme() {
-            const selectedTheme = document.getElementById('themeSelect').value;
-            document.documentElement.setAttribute('data-theme', selectedTheme);
-        }
-
-        function copyCode() {
-            const code = document.getElementById('codeText').innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                const btn = document.getElementById('copyBtn');
-                btn.innerText = "Kopyalandı!";
-                btn.style.background = "#10b981";
-                setTimeout(() => {
-                    btn.innerText = "Kopyala";
-                    btn.style.background = "var(--accent-2)";
-                }, 2000);
+                setTimeout(() => { btn.innerText = "Kopyala"; btn.style.background = "var(--accent-2)"; }, 2000);
             });
         }
     </script>
