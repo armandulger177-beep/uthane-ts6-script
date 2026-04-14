@@ -7,99 +7,93 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
         
-        /* Tema Değişkenleri (Değiştirilebilir Renkler) */
+        /* --- TEMA DEĞİŞKENLERİ --- */
         :root {
-            --bg-1: #0f172a;
-            --bg-2: #1e1b4b;
-            --text-main: #ffffff;
-            --text-sub: #cbd5e1;
-            --accent-1: #22d3ee;
-            --accent-2: #a855f7;
+            --bg-1: #0f172a; --bg-2: #1e1b4b;
+            --text-main: #ffffff; --text-sub: #cbd5e1;
+            --accent-1: #22d3ee; --accent-2: #a855f7;
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --btn-bg: linear-gradient(to right, #0ea5e9, #6366f1);
-            --term-bg: #000000;
-            --term-text: #10b981;
-            --term-header: #1e293b;
+            --term-bg: #000000; --term-text: #10b981; --term-header: #1e293b;
+            /* Arka Plan Işık Renkleri */
+            --glow-1: rgba(6, 182, 212, 0.4); 
+            --glow-2: rgba(139, 92, 246, 0.4);
         }
 
-        /* Cyber Neon Teması */
         [data-theme="cyber"] {
             --bg-1: #050505; --bg-2: #0a0a0a;
             --accent-1: #00ffcc; --accent-2: #ff00ff;
             --glass-bg: rgba(0, 255, 204, 0.05);
             --glass-border: rgba(0, 255, 204, 0.3);
-            --btn-bg: linear-gradient(to right, #00ffcc, #ff00ff);
             --term-text: #00ffcc;
+            --glow-1: rgba(0, 255, 204, 0.3); 
+            --glow-2: rgba(255, 0, 255, 0.3);
         }
 
-        /* Royal Gold Teması */
         [data-theme="gold"] {
             --bg-1: #1a1612; --bg-2: #2d2417;
             --accent-1: #ffd700; --accent-2: #d4af37;
             --glass-bg: rgba(255, 215, 0, 0.05);
             --glass-border: rgba(255, 215, 0, 0.3);
-            --btn-bg: linear-gradient(to right, #ffd700, #d4af37);
             --term-text: #ffd700;
+            --glow-1: rgba(255, 215, 0, 0.3); 
+            --glow-2: rgba(212, 175, 55, 0.3);
         }
 
-        /* Arctic Light Teması */
         [data-theme="light"] {
             --bg-1: #f8fafc; --bg-2: #e2e8f0;
             --text-main: #0f172a; --text-sub: #334155;
             --accent-1: #0284c7; --accent-2: #4f46e5;
             --glass-bg: rgba(255, 255, 255, 0.7);
             --glass-border: rgba(0, 0, 0, 0.1);
-            --btn-bg: linear-gradient(to right, #0284c7, #4f46e5);
             --term-bg: #1e293b;
+            --glow-1: rgba(2, 132, 199, 0.2); 
+            --glow-2: rgba(79, 70, 229, 0.2);
         }
 
         body {
-            margin: 0; padding: 0;
-            font-family: 'Poppins', sans-serif;
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            overflow-x: hidden;
-            transition: background 0.5s ease, color 0.5s ease;
+            color: var(--text-main); min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            overflow-x: hidden; transition: background 0.5s ease, color 0.5s ease;
         }
 
-        /* Üst Tema Seçici */
-        .theme-switcher {
-            position: absolute;
-            top: 20px; right: 20px;
-            z-index: 10;
+        /* --- HAREKETLİ ARKA PLAN IŞIKLARI --- */
+        .glow-circle {
+            position: fixed; border-radius: 50%; filter: blur(120px);
+            z-index: 0; transition: background 0.5s ease; pointer-events: none;
         }
+        .c1 {
+            width: 400px; height: 400px; background: var(--glow-1);
+            top: -100px; left: -100px; animation: float1 15s infinite alternate;
+        }
+        .c2 {
+            width: 500px; height: 500px; background: var(--glow-2);
+            bottom: -150px; right: -150px; animation: float2 20s infinite alternate;
+        }
+
+        @keyframes float1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 100px) scale(1.2); }
+        }
+        @keyframes float2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-100px, -150px) scale(1.1); }
+        }
+
+        /* --- TEMA SEÇİCİ --- */
+        .theme-switcher { position: absolute; top: 20px; right: 20px; z-index: 10; }
         .theme-select {
-            background: var(--glass-bg);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            outline: none; cursor: pointer;
-            backdrop-filter: blur(10px);
+            background: var(--glass-bg); color: var(--text-main); border: 1px solid var(--glass-border);
+            padding: 8px 15px; border-radius: 8px; font-family: 'Poppins', sans-serif;
+            outline: none; cursor: pointer; backdrop-filter: blur(10px);
         }
         .theme-select option { background: #1e1b4b; color: #fff; }
 
-        .container {
-            position: relative; z-index: 1;
-            max-width: 900px; text-align: center; padding: 2rem;
-            margin-top: 40px;
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.5s ease;
-        }
-
+        /* --- ANA KONTEYNER --- */
+        .container { position: relative; z-index: 1; max-width: 1000px; text-align: center; padding: 2rem; margin-top: 40px; }
+        
         h1 {
             font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem;
             background: linear-gradient(to right, var(--accent-1), var(--accent-2));
@@ -107,76 +101,63 @@
         }
         h2 { font-size: 1.5rem; font-weight: 300; color: var(--text-sub); margin-bottom: 2rem; }
 
-        .features {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 1rem; margin-bottom: 2.5rem;
-        }
-        .feature-badge {
-            background: var(--glass-bg); padding: 0.5rem 1rem;
-            border-radius: 50px; font-size: 0.9rem;
-            border: 1px solid var(--glass-border);
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 2.5rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
         }
 
-        /* --- YENİ TERMİNAL GÖRÜNÜMÜ --- */
+        /* --- TERMİNAL KOD ALANI --- */
         .terminal-wrapper {
-            background: var(--term-bg);
-            border-radius: 10px;
-            border: 1px solid #333;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            background: var(--term-bg); border-radius: 10px; border: 1px solid #333;
+            margin-bottom: 1.5rem; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
         .terminal-header {
-            background: var(--term-header);
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            border-bottom: 1px solid #333;
+            background: var(--term-header); padding: 10px 15px; display: flex;
+            justify-content: space-between; align-items: center; font-size: 0.85rem; color: #94a3b8; border-bottom: 1px solid #333;
         }
         .copy-btn {
-            background: var(--accent-2);
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            transition: 0.3s;
+            background: var(--accent-2); color: white; border: none; padding: 5px 12px;
+            border-radius: 5px; cursor: pointer; font-weight: 600; transition: 0.3s;
         }
         .copy-btn:hover { filter: brightness(1.2); }
         .terminal-body {
-            padding: 1.5rem;
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--term-text);
-            text-align: left;
-            font-size: 1rem;
-            overflow-x: auto; /* Kodu yana kaydırılabilir yapar, çirkin durmaz */
-            white-space: nowrap;
+            padding: 1.5rem; font-family: 'Courier New', monospace; color: var(--term-text);
+            text-align: left; font-size: 1rem; overflow-x: auto; white-space: nowrap;
         }
         .terminal-body::-webkit-scrollbar { height: 8px; }
         .terminal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
+        /* --- TANITIM VE ÖZELLİK KARTLARI (YENİ EKLENDİ) --- */
+        .promo-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem; margin-top: 2rem; text-align: left;
+        }
+        .promo-card {
+            background: rgba(0, 0, 0, 0.2); border: 1px solid var(--glass-border);
+            padding: 1.5rem; border-radius: 15px; transition: 0.3s ease;
+        }
+        .promo-card:hover { transform: translateY(-5px); border-color: var(--accent-1); }
+        .promo-card h3 { margin-top: 0; color: var(--accent-1); font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .promo-card p { margin: 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.5; }
+
         /* --- İLETİŞİM KUTUSU --- */
         .contact-box {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            border: 1px dashed var(--accent-1);
+            margin-top: 2.5rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px; border: 1px dashed var(--accent-1); display: inline-block;
         }
-        .contact-box p { margin: 0 0 10px 0; color: var(--text-sub); }
-        .contact-box h3 {
-            margin: 0; font-size: 1.4rem; color: var(--text-main);
-            letter-spacing: 1px;
-        }
+        .contact-box p { margin: 0 0 5px 0; color: var(--text-sub); font-size: 0.9rem;}
+        .contact-box h3 { margin: 0; font-size: 1.5rem; color: var(--text-main); letter-spacing: 1px; }
         .contact-box span { color: var(--accent-1); }
+        
+        .footer { margin-top: 3rem; margin-bottom: 2rem; font-size: 0.85rem; color: #64748b; text-align: center;}
     </style>
 </head>
 <body>
+
+    <div class="glow-circle c1"></div>
+    <div class="glow-circle c2"></div>
 
     <div class="theme-switcher">
         <select class="theme-select" id="themeSelect" onchange="changeTheme()">
@@ -189,18 +170,12 @@
 
     <div class="container">
         <h1>UTHANE ELITE</h1>
-        <h2>Tek Tuşla TeamSpeak 6 & Web Panel Kurulumu</h2>
+        <h2>Profesyoneller İçin Otonom TS6 Altyapısı</h2>
 
         <div class="glass-card">
-            <div class="features">
-                <span class="feature-badge">⚡ Otonom Kurulum</span>
-                <span class="feature-badge">🛡️ HWID Koruması</span>
-                <span class="feature-badge">🎨 Dinamik Temalar</span>
-                <span class="feature-badge">🤖 Telegram Bot</span>
-            </div>
-
-            <p style="color: var(--text-sub); line-height: 1.6; margin-bottom: 2rem;">
-                Sunucunuzu saniyeler içinde ayağa kaldırın. Aşağıdaki komutu Linux sunucunuza yapıştırın ve <b>2 Saatlik Otomatik Testinizi</b> hemen başlatın!
+            
+            <p style="color: var(--text-sub); line-height: 1.6; margin-bottom: 2rem; font-size: 1.05rem;">
+                Linux bilginiz olmasına gerek yok. Aşağıdaki kurulum komutunu sunucunuza yapıştırın ve arkanıza yaslanın. Sistem donanımınızı tanıyacak ve <b>2 Saatlik Ücretsiz Test Lisansınızı</b> anında aktif edecektir.
             </p>
 
             <div class="terminal-wrapper">
@@ -211,30 +186,53 @@
                 <div class="terminal-body" id="codeText">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</div>
             </div>
 
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <h3>⚡ Tek Tuşla Kurulum</h3>
+                    <p>TS6 Beta8 kurulumu, UFW güvenlik duvarı ayarları ve port açma işlemleri sistem tarafından tamamen otonom bir şekilde halledilir.</p>
+                </div>
+                <div class="promo-card">
+                    <h3>🎨 Glassmorphism Panel</h3>
+                    <p>Sunucunuzu siyah ekrandan kurtarın! Modern, karanlık temalı ve elit bir web arayüzü ile sunucunuzu tarayıcı üzerinden kolayca yönetin.</p>
+                </div>
+                <div class="promo-card">
+                    <h3>🛠️ Chat & Karakter Yaması</h3>
+                    <p>Klasik sorunlara elveda. 'serveradmin' isminin gizlenmesi ve Türkçe karakter/chat bozulmaları script tarafından kalıcı olarak yamalanır.</p>
+                </div>
+                <div class="promo-card">
+                    <h3>🛡️ Üst Düzey Güvenlik</h3>
+                    <p>Panelinizdeki tüm girişler ve işlemler Telegram Botu ile anlık cebinize gelir. HWID ve IP bazlı lisanslama ile yetkisiz erişimler engellenir.</p>
+                </div>
+            </div>
+
             <div class="contact-box">
                 <p>Destek & Satın Alım İçin İletişim Adresimiz:</p>
                 <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
             </div>
+            
+        </div>
+        
+        <div class="footer">
+            &copy; 2026 Uthane Script. Tüm Hakları Saklıdır.<br>
+            Sistem sadece Ubuntu 20.04 ve 22.04 LTS sürümlerinde desteklenmektedir.
         </div>
     </div>
 
     <script>
-        // Tema Değiştirme Fonksiyonu
         function changeTheme() {
             const selectedTheme = document.getElementById('themeSelect').value;
             document.documentElement.setAttribute('data-theme', selectedTheme);
         }
 
-        // Kopyalama Fonksiyonu
         function copyCode() {
             const code = document.getElementById('codeText').innerText;
             navigator.clipboard.writeText(code).then(() => {
                 const btn = document.getElementById('copyBtn');
                 btn.innerText = "Kopyalandı!";
-                btn.style.background = "#10b981"; // Yeşil renk
+                btn.style.background = "#10b981";
                 setTimeout(() => {
                     btn.innerText = "Kopyala";
-                    btn.style.background = "var(--accent-2)"; // Eski renge dön
+                    btn.style.background = "var(--accent-2)";
                 }, 2000);
             });
         }
