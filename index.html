@@ -3,37 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uthane Script Hizmetleri | </title>
+    <title>Uthane Script Elite | TS6 & Web Panel</title>
     <style>
-        /* --- SHOPIER BUTONU YENİ --- */
-        .shopier-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 15px;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-            transition: all 0.3s ease;
-            width: 100%;
-            box-sizing: border-box;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .shopier-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
-            filter: brightness(1.1);
-        }
-        .contact-content {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
         
         /* --- TEMA VE RENK AYARLARI --- */
@@ -94,25 +65,18 @@
         h1 { font-size: 3rem; font-weight: 800; margin: 0 0 10px 0; background: linear-gradient(to right, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; }
         .subtitle { font-size: 1.1rem; color: var(--text-sub); margin-bottom: 0; }
 
-        /* --- BAŞLIK ARKA PLANI (HERO BANNER) YENİ EKLENDİ --- */
+        /* --- BAŞLIK ARKA PLANI (HERO BANNER) --- */
         .hero-title-wrapper {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 30px 40px;
-            display: inline-block;
-            margin-bottom: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 20px; padding: 30px 40px;
+            display: inline-block; margin-bottom: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
-        /* --- TERMİNAL DÜZELTMESİ (ORTALANDI VE GENİŞLİĞİ SABİTLENDİ) --- */
+        /* --- TERMİNAL DÜZELTMESİ --- */
         .terminal-wrapper { 
             background: var(--term-bg); border-radius: 12px; border: 1px solid #333; 
             overflow: hidden; margin: 0 auto 40px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            max-width: 850px; /* Sağa sola taşmasını engeller */
-            text-align: left; /* İçindeki yazıları sola sabitler */
+            max-width: 850px; text-align: left;
         }
         .terminal-header { background: var(--term-header); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-size: 0.8rem; border-bottom: 1px solid #333;}
         .copy-btn { background: var(--accent-2); color: white; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.3s;}
@@ -121,29 +85,29 @@
         .terminal-body::-webkit-scrollbar { height: 8px; }
         .terminal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
-        /* --- PROFESYONEL İLETİŞİM KUTUSU (YENİ EKLENDİ) --- */
+        /* --- PROFESYONEL İLETİŞİM KUTUSU VE SHOPIER --- */
         .contact-box { 
             background: linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.1));
-            border: 1px solid var(--glass-border);
-            border-left: 5px solid var(--accent-1);
-            border-radius: 12px;
-            padding: 20px 30px; 
-            display: inline-flex; 
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            border: 1px solid var(--glass-border); border-left: 5px solid var(--accent-1);
+            border-radius: 12px; padding: 20px 30px; display: inline-flex; flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: 0.3s;
         }
-        .contact-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            border-color: var(--accent-1);
-        }
+        .contact-box:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.5); border-color: var(--accent-1); }
+        .contact-content { display: flex; align-items: center; gap: 20px; }
         .contact-icon { font-size: 2.8rem; line-height: 1; }
         .contact-text { text-align: left; }
         .contact-text p { margin: 0 0 5px 0; font-size: 0.85rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
         .contact-text h3 { margin: 0; font-size: 1.6rem; color: var(--text-main); letter-spacing: 1px;}
         .contact-text span { color: var(--accent-1); }
+        
+        .shopier-btn {
+            display: inline-flex; align-items: center; justify-content: center; margin-top: 15px;
+            padding: 12px 25px; background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            color: #ffffff; text-decoration: none; font-weight: 600; font-size: 1rem;
+            border-radius: 10px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease; width: 100%; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .shopier-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6); filter: brightness(1.1); }
 
         /* --- SİBER KOMUTA KARTLARI --- */
         .promo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 40px; }
@@ -196,7 +160,8 @@
             .copy-btn { width: 100%; padding: 10px; font-size: 1rem; }
             .terminal-body { font-size: 0.8rem; padding: 15px; }
 
-            .contact-box { flex-direction: column; text-align: center; gap: 10px; padding: 20px; }
+            .contact-box { width: 100%; box-sizing: border-box; padding: 20px; }
+            .contact-content { flex-direction: column; text-align: center; gap: 10px; }
             .contact-text { text-align: center; }
             .contact-text h3 { font-size: 1.3rem; }
 
@@ -243,17 +208,22 @@
         </div>
 
         <div class="contact-box">
-            <div class="contact-icon">🎧</div>
-            <div class="contact-text">
-                <p>7/24 Teknik Destek & Satın Alım</p>
-                <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
+            <div class="contact-content">
+                <div class="contact-icon">🎧</div>
+                <div class="contact-text">
+                    <p>7/24 Teknik Destek & İletişim</p>
+                    <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
+                </div>
             </div>
+            <a href="https://www.shopier.com/uthanescript" target="_blank" class="shopier-btn">
+                🛒 Shopier İle Güvenli Satın Al
+            </a>
         </div>
 
     </section>
 
     <section id="details">
-        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Scriptin Özellikleri</h2>
+        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Siber Komuta Detayları</h2>
         <div class="subtitle" style="margin-bottom: 40px;">Sıradan bir script değil, tam teşekküllü bir yönetim ağı.</div>
         
         <div class="promo-grid">
