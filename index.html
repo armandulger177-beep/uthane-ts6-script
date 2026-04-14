@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,155 +7,185 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
         
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
+        /* Tema Değişkenleri (Değiştirilebilir Renkler) */
+        :root {
+            --bg-1: #0f172a;
+            --bg-2: #1e1b4b;
+            --text-main: #ffffff;
+            --text-sub: #cbd5e1;
+            --accent-1: #22d3ee;
+            --accent-2: #a855f7;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --btn-bg: linear-gradient(to right, #0ea5e9, #6366f1);
+            --term-bg: #000000;
+            --term-text: #10b981;
+            --term-header: #1e293b;
         }
 
-        /* Arka plandaki neon isiklar */
-        .glow-circle {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: #06b6d4;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.3;
-            top: -100px;
-            left: -100px;
-            z-index: 0;
+        /* Cyber Neon Teması */
+        [data-theme="cyber"] {
+            --bg-1: #050505; --bg-2: #0a0a0a;
+            --accent-1: #00ffcc; --accent-2: #ff00ff;
+            --glass-bg: rgba(0, 255, 204, 0.05);
+            --glass-border: rgba(0, 255, 204, 0.3);
+            --btn-bg: linear-gradient(to right, #00ffcc, #ff00ff);
+            --term-text: #00ffcc;
         }
-        .glow-circle-2 {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: #8b5cf6;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.3;
-            bottom: -150px;
-            right: -100px;
-            z-index: 0;
+
+        /* Royal Gold Teması */
+        [data-theme="gold"] {
+            --bg-1: #1a1612; --bg-2: #2d2417;
+            --accent-1: #ffd700; --accent-2: #d4af37;
+            --glass-bg: rgba(255, 215, 0, 0.05);
+            --glass-border: rgba(255, 215, 0, 0.3);
+            --btn-bg: linear-gradient(to right, #ffd700, #d4af37);
+            --term-text: #ffd700;
         }
+
+        /* Arctic Light Teması */
+        [data-theme="light"] {
+            --bg-1: #f8fafc; --bg-2: #e2e8f0;
+            --text-main: #0f172a; --text-sub: #334155;
+            --accent-1: #0284c7; --accent-2: #4f46e5;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --btn-bg: linear-gradient(to right, #0284c7, #4f46e5);
+            --term-bg: #1e293b;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Üst Tema Seçici */
+        .theme-switcher {
+            position: absolute;
+            top: 20px; right: 20px;
+            z-index: 10;
+        }
+        .theme-select {
+            background: var(--glass-bg);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            outline: none; cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        .theme-select option { background: #1e1b4b; color: #fff; }
 
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            text-align: center;
-            padding: 2rem;
+            position: relative; z-index: 1;
+            max-width: 900px; text-align: center; padding: 2rem;
+            margin-top: 40px;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--glass-bg);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 3rem;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
         }
 
         h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #22d3ee, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: #cbd5e1;
-            margin-bottom: 2rem;
-        }
+        h2 { font-size: 1.5rem; font-weight: 300; color: var(--text-sub); margin-bottom: 2rem; }
 
         .features {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 1rem; margin-bottom: 2.5rem;
         }
-
         .feature-badge {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            background: var(--glass-bg); padding: 0.5rem 1rem;
+            border-radius: 50px; font-size: 0.9rem;
+            border: 1px solid var(--glass-border);
         }
 
-        .code-box {
-            background: #000000;
-            padding: 1.5rem;
+        /* --- YENİ TERMİNAL GÖRÜNÜMÜ --- */
+        .terminal-wrapper {
+            background: var(--term-bg);
             border-radius: 10px;
-            font-family: monospace;
-            color: #10b981;
-            font-size: 1.1rem;
             border: 1px solid #333;
-            position: relative;
             margin-bottom: 2rem;
-            text-align: left;
-            overflow-x: auto;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-
-        .code-label {
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: #a855f7;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: bold;
+        .terminal-header {
+            background: var(--term-header);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            border-bottom: 1px solid #333;
         }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            font-weight: 600;
+        .copy-btn {
+            background: var(--accent-2);
             color: white;
-            background: linear-gradient(to right, #0ea5e9, #6366f1);
             border: none;
-            border-radius: 50px;
+            padding: 5px 12px;
+            border-radius: 5px;
             cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
         }
+        .copy-btn:hover { filter: brightness(1.2); }
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--term-text);
+            text-align: left;
+            font-size: 1rem;
+            overflow-x: auto; /* Kodu yana kaydırılabilir yapar, çirkin durmaz */
+            white-space: nowrap;
+        }
+        .terminal-body::-webkit-scrollbar { height: 8px; }
+        .terminal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+        /* --- İLETİŞİM KUTUSU --- */
+        .contact-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 1px dashed var(--accent-1);
         }
-
-        .footer {
-            margin-top: 3rem;
-            font-size: 0.9rem;
-            color: #64748b;
+        .contact-box p { margin: 0 0 10px 0; color: var(--text-sub); }
+        .contact-box h3 {
+            margin: 0; font-size: 1.4rem; color: var(--text-main);
+            letter-spacing: 1px;
         }
+        .contact-box span { color: var(--accent-1); }
     </style>
 </head>
 <body>
 
-    <div class="glow-circle"></div>
-    <div class="glow-circle-2"></div>
+    <div class="theme-switcher">
+        <select class="theme-select" id="themeSelect" onchange="changeTheme()">
+            <option value="dark">Elite Dark (Varsayılan)</option>
+            <option value="cyber">Cyber Neon</option>
+            <option value="gold">Royal Gold</option>
+            <option value="light">Arctic Light</option>
+        </select>
+    </div>
 
     <div class="container">
         <h1>UTHANE ELITE</h1>
@@ -165,27 +195,49 @@
             <div class="features">
                 <span class="feature-badge">⚡ Otonom Kurulum</span>
                 <span class="feature-badge">🛡️ HWID Koruması</span>
-                <span class="feature-badge">🎨 Glassmorphism Panel</span>
+                <span class="feature-badge">🎨 Dinamik Temalar</span>
                 <span class="feature-badge">🤖 Telegram Bot</span>
             </div>
 
-            <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; font-size: 1.1rem;">
-                Sunucunuzu saniyeler içinde ayağa kaldırın. Chat fix, oda hiyerarşisi ve elit yönetim paneli tek bir komutta.
-                Aşağıdaki komutu sunucunuza yapıştırın ve <b>2 Saatlik Otomatik Testinizi</b> hemen başlatın!
+            <p style="color: var(--text-sub); line-height: 1.6; margin-bottom: 2rem;">
+                Sunucunuzu saniyeler içinde ayağa kaldırın. Aşağıdaki komutu Linux sunucunuza yapıştırın ve <b>2 Saatlik Otomatik Testinizi</b> hemen başlatın!
             </p>
 
-            <div class="code-box">
-                <span class="code-label">Linux Terminal Komutu</span>
-                wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum
+            <div class="terminal-wrapper">
+                <div class="terminal-header">
+                    <span>root@ubuntu:~# Kurulum Komutu</span>
+                    <button class="copy-btn" onclick="copyCode()" id="copyBtn">Kopyala</button>
+                </div>
+                <div class="terminal-body" id="codeText">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</div>
             </div>
 
-            <a href="https://discord.gg/SENIN-DISCORD-LINKIN" class="btn" target="_blank">Satın Al / Discord</a>
-        </div>
-
-        <div class="footer">
-            &copy; 2026 Uthane Script. Tüm Hakları Saklıdır.
+            <div class="contact-box">
+                <p>Destek & Satın Alım İçin İletişim Adresimiz:</p>
+                <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
+            </div>
         </div>
     </div>
 
+    <script>
+        // Tema Değiştirme Fonksiyonu
+        function changeTheme() {
+            const selectedTheme = document.getElementById('themeSelect').value;
+            document.documentElement.setAttribute('data-theme', selectedTheme);
+        }
+
+        // Kopyalama Fonksiyonu
+        function copyCode() {
+            const code = document.getElementById('codeText').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.innerText = "Kopyalandı!";
+                btn.style.background = "#10b981"; // Yeşil renk
+                setTimeout(() => {
+                    btn.innerText = "Kopyala";
+                    btn.style.background = "var(--accent-2)"; // Eski renge dön
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
