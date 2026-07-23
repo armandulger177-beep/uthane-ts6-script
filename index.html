@@ -1,324 +1,331 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="dark">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uthane Script Elite | TS6 & Web Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-        
-        /* --- TEMA VE RENK AYARLARI --- */
+        /* --- ELITE PROTOCOL TEMA MOTORU --- */
         :root {
-            --bg-1: #0f172a; --bg-2: #1e1b4b;
-            --text-main: #ffffff; --text-sub: #cbd5e1;
-            --accent-1: #22d3ee; --accent-2: #a855f7;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --term-bg: #000000; --term-text: #10b981; --term-header: #1e293b;
-            --glow-1: #06b6d422; --glow-2: #8b5cf622;
+            --bg-base: #020617;
+            --bg-glow-1: #0f172a;
+            --bg-glow-2: #1e1b4b;
+            --accent-main: #3b82f6;
+            --accent-sec: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(15, 23, 42, 0.5);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --term-text: #10b981;
+            --glow-shadow: rgba(59, 130, 246, 0.4);
         }
 
-        [data-theme="cyber"] {
-            --bg-1: #050505; --bg-2: #0a0a0a;
-            --accent-1: #00ffcc; --accent-2: #ff00ff;
-            --glass-bg: rgba(0, 255, 204, 0.05); --glass-border: rgba(0, 255, 204, 0.3);
-            --term-text: #00ffcc; --glow-1: #00ffcc15; --glow-2: #ff00ff15;
+        body.theme-cyber {
+            --bg-base: #050505;
+            --bg-glow-1: #064e3b;
+            --bg-glow-2: #312e81;
+            --accent-main: #10b981;
+            --accent-sec: #06b6d4;
+            --card-bg: rgba(6, 78, 59, 0.2);
+            --card-border: rgba(16, 185, 129, 0.2);
+            --term-text: #10b981;
+            --glow-shadow: rgba(16, 185, 129, 0.4);
         }
 
-        [data-theme="gold"] {
-            --bg-1: #1a1612; --bg-2: #2d2417;
-            --accent-1: #ffd700; --accent-2: #d4af37;
-            --glass-bg: rgba(255, 215, 0, 0.05); --glass-border: rgba(255, 215, 0, 0.3);
-            --term-text: #ffd700; --glow-1: #ffd70015; --glow-2: #d4af3715;
+        body.theme-gold {
+            --bg-base: #0a0a0a;
+            --bg-glow-1: #292524;
+            --bg-glow-2: #451a03;
+            --accent-main: #eab308;
+            --accent-sec: #f59e0b;
+            --card-bg: rgba(69, 26, 3, 0.3);
+            --card-border: rgba(234, 179, 8, 0.2);
+            --term-text: #eab308;
+            --glow-shadow: rgba(234, 179, 8, 0.4);
         }
 
-        html { scroll-behavior: smooth; }
+        /* --- TEMEL AYARLAR --- */
         body {
-            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-1); color: var(--text-main);
-            min-height: 100vh; overflow-x: hidden; transition: 0.5s;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.8s ease;
         }
 
-        /* --- KASMAYAN PERFORMANSLI ARKA PLAN --- */
-        .bg-glow {
+        .tech-font { font-family: 'Fira Code', monospace; }
+
+        /* --- PERFORMANSLI AMBİYANS --- */
+        .ambient-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
-            background: radial-gradient(circle at 10% 40%, var(--glow-1), transparent 35%),
-                        radial-gradient(circle at 90% 20%, var(--glow-2), transparent 35%);
-            transition: 0.8s;
+            background: radial-gradient(circle at 15% 30%, var(--bg-glow-1), transparent 45%),
+                        radial-gradient(circle at 85% 70%, var(--bg-glow-2), transparent 45%);
+            transition: all 1s ease;
         }
 
-        /* --- NAVBAR (ÜST MENÜ) --- */
-        .navbar {
-            position: fixed; top: 0; width: 100%; z-index: 100;
-            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex; justify-content: space-around; align-items: center; padding: 12px 0;
-        }
-        .nav-logo { font-size: 1.4rem; font-weight: 800; color: var(--accent-1); text-decoration: none; letter-spacing: 2px; }
-        .nav-links a { color: var(--text-sub); text-decoration: none; margin: 0 15px; font-weight: 600; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent-1); }
-        .theme-select { background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--glass-border); padding: 5px 10px; border-radius: 8px; cursor: pointer; outline: none;}
-        .theme-select option { background: #1e1b4b; color: #fff; }
-
-        /* --- ORTAK BÖLÜM (SECTION) AYARLARI --- */
-        section { padding: 120px 20px 60px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
-        h1 { font-size: 3rem; font-weight: 800; margin: 0 0 10px 0; background: linear-gradient(to right, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; }
-        .subtitle { font-size: 1.1rem; color: var(--text-sub); margin-bottom: 0; }
-
-        /* --- BAŞLIK ARKA PLANI (HERO BANNER) --- */
-        .hero-title-wrapper {
-            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 20px; padding: 30px 40px;
-            display: inline-block; margin-bottom: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        /* --- GLASSMORPHISM --- */
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
         }
 
-        /* --- TERMİNAL DÜZELTMESİ --- */
-        .terminal-wrapper { 
-            background: var(--term-bg); border-radius: 12px; border: 1px solid #333; 
-            overflow: hidden; margin: 0 auto 40px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            max-width: 850px; text-align: left;
+        /* --- METİN EFEKTLERİ --- */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent-main), var(--accent-sec));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .terminal-header { background: var(--term-header); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-size: 0.8rem; border-bottom: 1px solid #333;}
-        .copy-btn { background: var(--accent-2); color: white; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.3s;}
-        .copy-btn:hover { filter: brightness(1.2); }
-        .terminal-body { padding: 20px; color: var(--term-text); font-family: 'Courier New', Courier, monospace; overflow-x: auto; white-space: nowrap; font-size: 1rem;}
-        .terminal-body::-webkit-scrollbar { height: 8px; }
-        .terminal-body::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
-        /* --- PROFESYONEL İLETİŞİM KUTUSU VE SHOPIER --- */
-        .contact-box { 
-            background: linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.1));
-            border: 1px solid var(--glass-border); border-left: 5px solid var(--accent-1);
-            border-radius: 12px; padding: 20px 30px; display: inline-flex; flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: 0.3s;
-        }
-        .contact-box:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.5); border-color: var(--accent-1); }
-        .contact-content { display: flex; align-items: center; gap: 20px; }
-        .contact-icon { font-size: 2.8rem; line-height: 1; }
-        .contact-text { text-align: left; }
-        .contact-text p { margin: 0 0 5px 0; font-size: 0.85rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
-        .contact-text h3 { margin: 0; font-size: 1.6rem; color: var(--text-main); letter-spacing: 1px;}
-        .contact-text span { color: var(--accent-1); }
-        
-        .shopier-btn {
-            display: inline-flex; align-items: center; justify-content: center; margin-top: 15px;
-            padding: 12px 25px; background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-            color: #ffffff; text-decoration: none; font-weight: 600; font-size: 1rem;
-            border-radius: 10px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-            transition: all 0.3s ease; width: 100%; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .shopier-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6); filter: brightness(1.1); }
-
-        /* --- SİBER KOMUTA KARTLARI --- */
-        .promo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 40px; }
+        /* --- KART ANİMASYONLARI --- */
         .promo-card {
-            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border); border-radius: 20px; padding: 30px 25px; text-align: left;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
-        .promo-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--accent-1), var(--accent-2)); opacity: 0; transition: 0.4s ease; }
-        .promo-card:hover { transform: translateY(-10px); border-color: var(--accent-1); box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 20px rgba(6, 182, 212, 0.05); }
+        .promo-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+            background: linear-gradient(to bottom, var(--accent-main), var(--accent-sec));
+            opacity: 0; transition: 0.4s ease;
+        }
+        .promo-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-main);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.02);
+        }
         .promo-card:hover::before { opacity: 1; }
-        .promo-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; transition: transform 0.4s ease; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+        .promo-icon { transition: transform 0.4s ease; filter: drop-shadow(0 0 12px var(--glow-shadow)); }
         .promo-card:hover .promo-icon { transform: scale(1.15) rotate(5deg); }
-        .promo-card h3 { margin: 0 0 10px 0; font-size: 1.3rem; color: var(--text-main); letter-spacing: 0.5px; }
-        .promo-card p { margin: 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.6; }
 
-        /* --- GALERİ VE TAM EKRAN MODALI --- */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .gallery-item { position: relative; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass-border); background: var(--glass-bg); transition: 0.3s; cursor: zoom-in; }
-        .gallery-item:hover { transform: translateY(-8px); border-color: var(--accent-1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        .gallery-item img { width: 100%; display: block; height: auto; transition: 0.5s;}
-        .gallery-cap { padding: 15px; font-size: 0.9rem; font-weight: 600; color: var(--accent-1); background: rgba(0,0,0,0.6); border-top: 1px solid var(--glass-border);}
-
-        .modal { display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(5px); }
-        .modal-content { margin: auto; display: block; width: 85%; max-width: 1200px; border-radius: 15px; border: 2px solid var(--accent-1); animation: zoom 0.3s; }
-        @keyframes zoom { from {transform:scale(0)} to {transform:scale(1)} }
-        .close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
-
-        .footer { padding: 2rem; font-size: 0.85rem; color: #64748b; text-align: center; margin-top: 50px;}
-
-        /* =========================================
-           📱 KUSURSUZ MOBİL UYUM (RESPONSIVE)
-           ========================================= */
-        @media (max-width: 768px) {
-            .navbar { padding: 10px 15px; justify-content: space-between; }
-            .nav-logo { font-size: 1.1rem; letter-spacing: 1px; }
-            .nav-links { display: none; } 
-            .theme-select { font-size: 0.8rem; padding: 4px 8px; }
-
-            section { padding: 100px 15px 40px 15px; }
-            .hero-title-wrapper { padding: 20px; }
-            .hero-title-wrapper h1 { font-size: 2rem; }
-            .subtitle { font-size: 0.95rem; }
-
-            .promo-grid, .gallery-grid { grid-template-columns: 1fr; gap: 20px; }
-            .promo-card { padding: 20px 15px; }
-            .promo-card:hover { transform: translateY(-5px); } 
-
-            .terminal-header { flex-direction: column; gap: 15px; text-align: center; }
-            .copy-btn { width: 100%; padding: 10px; font-size: 1rem; }
-            .terminal-body { font-size: 0.8rem; padding: 15px; }
-
-            .contact-box { width: 100%; box-sizing: border-box; padding: 20px; }
-            .contact-content { flex-direction: column; text-align: center; gap: 10px; }
-            .contact-text { text-align: center; }
-            .contact-text h3 { font-size: 1.3rem; }
-
-            .modal-content { width: 100%; margin-top: 50px; border-radius: 0; border: none; }
-            .close-modal { top: 10px; right: 20px; font-size: 35px; }
+        /* --- GALERİ & MODAL --- */
+        .gallery-item {
+            cursor: zoom-in; transition: all 0.4s ease;
+            position: relative; overflow: hidden;
         }
-        @media (max-width: 400px) {
-            .hero-title-wrapper h1 { font-size: 1.6rem; }
-            .nav-logo { font-size: 0.9rem; }
+        .gallery-item img { transition: transform 0.6s ease; }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-main);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
         }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-cap {
+            position: absolute; bottom: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 25px 15px 15px 15px; transform: translateY(100%); transition: 0.4s ease;
+            color: var(--text-main); font-weight: 600; letter-spacing: 0.5px;
+        }
+        .gallery-item:hover .gallery-cap { transform: translateY(0); }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-main); }
     </style>
 </head>
-<body>
+<body class="theme-dark antialiased selection:bg-blue-500/30">
 
-    <div class="bg-glow"></div>
+    <div class="ambient-bg"></div>
 
-    <nav class="navbar">
-        <a href="#home" class="nav-logo">UTHANE SCRIPT</a>
-        <div class="nav-links">
-            <a href="#home">Kurulum</a>
-            <a href="#details">Tanıtım</a>
-            <a href="#gallery">Arayüz</a>
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-white/10 px-6 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#home" class="text-xl md:text-2xl font-black tracking-widest text-gradient flex items-center gap-2">
+                <span class="text-white">🛡️ UTHANE</span> SCRIPT
+            </a>
+            
+            <div class="hidden md:flex gap-8 text-sm font-semibold tracking-wider uppercase text-[var(--text-muted)]">
+                <a href="#home" class="hover:text-[var(--accent-main)] transition-colors">Kurulum</a>
+                <a href="#details" class="hover:text-[var(--accent-main)] transition-colors">Tanıtım</a>
+                <a href="#gallery" class="hover:text-[var(--accent-main)] transition-colors">Arayüz</a>
+            </div>
+
+            <select id="themeSelect" onchange="changeTheme()" class="bg-black/40 border border-white/10 text-white text-xs font-bold uppercase tracking-wider py-2 px-3 rounded-xl focus:outline-none focus:border-[var(--accent-main)] cursor-pointer transition-colors shadow-inner">
+                <option value="dark" class="bg-slate-900">Elite Dark</option>
+                <option value="cyber" class="bg-slate-900">Cyber Neon</option>
+                <option value="gold" class="bg-slate-900">Royal Gold</option>
+            </select>
         </div>
-        <select class="theme-select" id="themeSelect" onchange="changeTheme()">
-            <option value="dark">Elite Dark</option>
-            <option value="cyber">Cyber Neon</option>
-            <option value="gold">Royal Gold</option>
-        </select>
     </nav>
 
-    <section id="home">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-32 pb-20">
         
-        <div class="hero-title-wrapper">
-            <h1>UTHANE TEAMSPEAK 6<br>HAZIR SCRIPT</h1>
-            <div class="subtitle">TeamSpeak 6'nın En Gelişmiş Yönetim Altyapısı</div>
-        </div>
-        
-        <div class="terminal-wrapper">
-            <div class="terminal-header">
-                <span>root@uthane:~# Komutu Kopyalayıp Terminale Yapıştırın</span>
-                <button class="copy-btn" onclick="copyCode()" id="copyBtn">Kopyala</button>
+        <!-- HERO SECTION -->
+        <section id="home" class="text-center pt-10 pb-24">
+            <div class="inline-block glass-panel px-8 py-10 md:py-14 md:px-16 rounded-3xl mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--accent-main)] to-[var(--accent-sec)] opacity-80"></div>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-4 text-gradient uppercase drop-shadow-lg">
+                    UTHANE TEAMSPEAK 6<br>HAZIR SCRIPT
+                </h1>
+                <p class="text-lg md:text-xl font-medium text-[var(--text-muted)] uppercase tracking-widest">
+                    TeamSpeak 6'nın En Gelişmiş Yönetim Altyapısı
+                </p>
             </div>
-            <div class="terminal-body" id="codeText">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</div>
-        </div>
 
-        <div class="contact-box">
-            <div class="contact-content">
-                <div class="contact-icon">🎧</div>
-                <div class="contact-text">
-                    <p>7/24 Teknik Destek & İletişim</p>
-                    <h3>TeamSpeak 6 <span>></span> 31.58.247.163</h3>
+            <!-- TERMINAL -->
+            <div class="max-w-4xl mx-auto glass-panel rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 mb-12 text-left">
+                <div class="bg-[#1e293b]/80 border-b border-slate-700/50 px-5 py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="flex gap-1.5">
+                            <div class="w-3 h-3 rounded-full bg-rose-500 shadow-inner"></div>
+                            <div class="w-3 h-3 rounded-full bg-amber-500 shadow-inner"></div>
+                            <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-inner"></div>
+                        </div>
+                        <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase ml-2">root@uthane:~# Komutu Kopyalayıp Terminale Yapıştırın</span>
+                    </div>
+                    <button id="copyBtn" onclick="copyCode()" class="w-full sm:w-auto bg-[var(--accent-main)] hover:bg-[var(--accent-sec)] text-white text-xs font-bold uppercase tracking-wider py-2 px-5 rounded-lg transition-all duration-300 shadow-[0_0_15px_var(--glow-shadow)]">
+                        Kopyala
+                    </button>
+                </div>
+                <div class="p-6 overflow-x-auto">
+                    <code id="codeText" class="tech-font text-[var(--term-text)] text-sm md:text-base whitespace-nowrap drop-shadow-[0_0_8px_var(--glow-shadow)]">wget -qO UthaneKurulum https://github.com/armandulger177-beep/uthane-ts6-script/releases/download/v1.0/UthaneKurulum && chmod +x UthaneKurulum && ./UthaneKurulum</code>
                 </div>
             </div>
-            <a href="https://www.shopier.com/uthanescript" target="_blank" class="shopier-btn">
-                🛒 Shopier İle Güvenli Satın Al
-            </a>
-        </div>
 
-    </section>
+            <!-- CONTACT & SHOPIER -->
+            <div class="inline-flex flex-col md:flex-row items-center gap-6 glass-panel p-2 pl-2 pr-6 rounded-2xl border-l-4 border-[var(--accent-main)] shadow-xl transition-all hover:scale-[102%]">
+                <div class="bg-black/40 p-4 rounded-xl flex items-center justify-center text-4xl shadow-inner border border-white/5">
+                    🎧
+                </div>
+                <div class="text-center md:text-left pt-2 md:pt-0">
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] mb-1">7/24 Teknik Destek & İletişim</p>
+                    <h3 class="text-xl md:text-2xl font-bold tracking-wide">TeamSpeak 6 <span class="text-[var(--accent-main)] mx-1">❯</span> 31.58.247.163</h3>
+                </div>
+                <div class="w-full md:w-auto md:ml-6 pb-2 md:pb-0 pr-2 md:pr-0">
+                    <a href="https://www.shopier.com/uthanescript" target="_blank" class="block w-full text-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm uppercase tracking-wider py-4 px-8 rounded-xl shadow-[0_10px_20px_rgba(79,70,229,0.3)] transition-all duration-300 border border-white/10 hover:-translate-y-1">
+                        🛒 Shopier İle Güvenli Satın Al
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <section id="details">
-        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Siber Komuta Detayları</h2>
-        <div class="subtitle" style="margin-bottom: 40px;">Sıradan bir script değil, tam teşekküllü bir yönetim ağı.</div>
-        
-        <div class="promo-grid">
-            <div class="promo-card">
-                <div class="promo-icon">📊</div>
-                <h3>Gerçek Zamanlı Takip</h3>
-                <p>Kapasite durumu, sunucu sinyali (ping) ve çalışma süresini anlık izleyin. Bağlı kullanıcıları tek ekranda görüp anında işlem yapın.</p>
+        <!-- DETAILS SECTION -->
+        <section id="details" class="py-16">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-wider mb-3 text-gradient">Siber Komuta Detayları</h2>
+                <p class="text-sm md:text-base font-semibold text-[var(--text-muted)] tracking-widest uppercase">Sıradan bir script değil, tam teşekküllü bir yönetim ağı.</p>
             </div>
-            <div class="promo-card">
-                <div class="promo-icon">📂</div>
-                <h3>Gelişmiş Oda Hiyerarşisi</h3>
-                <p>Oyunlara özel hazır oda dizilimi ile gelir. Tek tıkla yeni odalar oluşturun, şifreleyin veya mevcut odaları anında güncelleyin.</p>
-            </div>
-            <div class="promo-card">
-                <div class="promo-icon">👑</div>
-                <h3>Hassas Yetki Kontrolü</h3>
-                <p>Kurucu, Admin ve ServerAdmin rollerini web üzerinden yönetin. Yeni roller ekleyerek sunucu otoritenizi tam kapasite kullanın.</p>
-            </div>
-            <div class="promo-card">
-                <div class="promo-icon">📜</div>
-                <h3>Siber Arşiv & Loglar</h3>
-                <p>Bağlantı arşivi ile kimin ne kadar süre sunucuda kaldığını görün. Tüm panel işlemleri ve TS3 çekirdek logları güvenliğiniz için kayıt altında.</p>
-            </div>
-            <div class="promo-card">
-                <div class="promo-icon">🔒</div>
-                <h3>Acil Durum Kilidi (Lockdown)</h3>
-                <p>Sunucunuz saldırı altındaysa tek tuşla <b>'Kilitle'</b> özelliğini aktif edin. Tüm girişleri mühürleyin ve sunucuyu rastgele şifreyle korumaya alın.</p>
-            </div>
-            <div class="promo-card">
-                <div class="promo-icon">💾</div>
-                <h3>Bulut Yedekleme</h3>
-                <p>Oda dizilimlerinizi ve yetki ayarlarınızı tek tıkla <b>.bak</b> dosyası olarak bilgisayarınıza indirin. Asla veri kaybetmeyin.</p>
-            </div>
-        </div>
-    </section>
 
-    <section id="gallery">
-        <h2 style="font-size: 2.5rem; margin-bottom: 3rem;">Web Panelden Görseller</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/login.png" alt="Giriş Ekranı">
-                <div class="gallery-cap">Siber Komuta Giriş Ekranı</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="promo-card glass-panel p-8 rounded-2xl">
+                    <div class="promo-icon text-5xl mb-6">📊</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Gerçek Zamanlı Takip</h3>
+                    <p class="text-sm text-[var(--text-muted)] leading-relaxed">Kapasite durumu, sunucu sinyali (ping) ve çalışma süresini anlık izleyin. Bağlı kullanıcıları tek ekranda görüp anında işlem yapın.</p>
+                </div>
+                <div class="promo-card glass-panel p-8 rounded-2xl">
+                    <div class="promo-icon text-5xl mb-6">📂</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Gelişmiş Oda Hiyerarşisi</h3>
+                    <p class="text-sm text-[var(--text-muted)] leading-relaxed">Oyunlara özel hazır oda dizilimi ile gelir. Tek tıkla yeni odalar oluşturun, şifreleyin veya mevcut odaları anında güncelleyin.</p>
+                </div>
+                <div class="promo-card glass-panel p-8 rounded-2xl">
+                    <div class="promo-icon text-5xl mb-6">👑</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Hassas Yetki Kontrolü</h3>
+                    <p class="text-sm text-[var(--text-muted)] leading-relaxed">Kurucu, Admin ve ServerAdmin rollerini web üzerinden yönetin. Yeni roller ekleyerek sunucu otoritenizi tam kapasite kullanın.</p>
+                </div>
+                <div class="promo-card glass-panel p-8 rounded-2xl">
+                    <div class="promo-icon text-5xl mb-6">📜</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Siber Arşiv & Loglar</h3>
+                    <p class="text-sm text-[var(--text-muted)] leading-relaxed">Bağlantı arşivi ile kimin ne kadar süre sunucuda kaldığını görün. Tüm panel işlemleri ve TS3 çekirdek logları güvenliğiniz için kayıt altında.</p>
+                </div>
+                <div class="promo-card glass-panel p-8 rounded-2xl">
+                    <div class="promo-icon text-5xl mb-6">🔒</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Acil Durum Kilidi (Lockdown)</h3>
+                    <p class="text-sm text-[var(--text-muted)] leading-relaxed">Sunucunuz saldırı altındaysa tek tuşla <b class="text-white">'Kilitle'</b> özelliğini aktif edin. Tüm girişleri mühürleyin ve sunucuyu rastgele şifreyle korumaya alın.</p>
+                </div>
+                <div class="promo-card glass-panel p-8 rounded-2xl">
+                    <div class="promo-icon text-5xl mb-6">💾</div>
+                    <h3 class="text-xl font-bold mb-3 tracking-wide">Bulut Yedekleme</h3>
+                    <p class="text-sm text-[var(--text-muted)] leading-relaxed">Oda dizilimlerinizi ve yetki ayarlarınızı tek tıkla <b class="text-white">.bak</b> dosyası olarak bilgisayarınıza indirin. Asla veri kaybetmeyin.</p>
+                </div>
             </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/genel-bakis.png" alt="Genel Bakış">
-                <div class="gallery-cap">Genel İstatistik Panosu</div>
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/oda-yonetimi.png" alt="Oda Yönetimi">
-                <div class="gallery-cap">Gelişmiş Oda & Kanal Yönetimi</div>
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/roller.png" alt="Rol Yönetimi">
-                <div class="gallery-cap">Yetki Grubu (Rol) Düzenleyici</div>
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/giris-cikis.png" alt="Kayıtlar">
-                <div class="gallery-cap">Detaylı Bağlantı Arşivi</div>
-            </div>
-            <div class="gallery-item" onclick="openModal(this)">
-                <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/ayarlar.png" alt="Sistem Ayarları">
-                <div class="gallery-cap">Kritik Sunucu & Güvenlik Ayarları</div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <div id="imageModal" class="modal" onclick="this.style.display='none'">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="fullImg">
+        <!-- GALLERY SECTION -->
+        <section id="gallery" class="py-16">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-wider mb-3 text-gradient">Web Panelden Görseller</h2>
+                <p class="text-sm md:text-base font-semibold text-[var(--text-muted)] tracking-widest uppercase">Sistemin gücüne yakından bakın.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                    <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/login.png" alt="Giriş Ekranı" class="w-full h-56 object-cover object-top">
+                    <div class="gallery-cap">Siber Komuta Giriş Ekranı</div>
+                </div>
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                    <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/genel-bakis.png" alt="Genel Bakış" class="w-full h-56 object-cover object-top">
+                    <div class="gallery-cap">Genel İstatistik Panosu</div>
+                </div>
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                    <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/oda-yonetimi.png" alt="Oda Yönetimi" class="w-full h-56 object-cover object-top">
+                    <div class="gallery-cap">Gelişmiş Oda & Kanal Yönetimi</div>
+                </div>
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                    <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/roller.png" alt="Rol Yönetimi" class="w-full h-56 object-cover object-top">
+                    <div class="gallery-cap">Yetki Grubu (Rol) Düzenleyici</div>
+                </div>
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                    <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/giris-cikis.png" alt="Kayıtlar" class="w-full h-56 object-cover object-top">
+                    <div class="gallery-cap">Detaylı Bağlantı Arşivi</div>
+                </div>
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                    <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/ayarlar.png" alt="Sistem Ayarları" class="w-full h-56 object-cover object-top">
+                    <div class="gallery-cap">Kritik Sunucu & Güvenlik Ayarları</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 bg-black/40 backdrop-blur-md py-8 text-center mt-10">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">&copy; 2026 Uthane Script Elite. Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="imageModal" class="fixed inset-0 z-[1000] hidden bg-black/90 backdrop-blur-md p-4 md:p-10 flex items-center justify-center transition-opacity" onclick="this.style.display='none'">
+        <span class="absolute top-6 right-8 text-white text-5xl font-light cursor-pointer hover:text-[var(--accent-main)] transition-colors">&times;</span>
+        <img id="fullImg" class="max-w-full max-h-[90vh] rounded-xl border border-[var(--card-border)] shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-95 transition-transform duration-300" src="" alt="Fullscreen Image">
     </div>
 
-    <div class="footer">&copy; 2026 Uthane Script Elite. Tüm Hakları Saklıdır.</div>
-
+    <!-- SCRIPTS -->
     <script>
         function changeTheme() {
             const selectedTheme = document.getElementById('themeSelect').value;
-            document.documentElement.setAttribute('data-theme', selectedTheme);
+            document.body.className = `theme-${selectedTheme} antialiased selection:bg-blue-500/30 transition-colors duration-700`;
         }
 
         function copyCode() {
             const code = document.getElementById('codeText').innerText;
             navigator.clipboard.writeText(code).then(() => {
                 const btn = document.getElementById('copyBtn');
-                btn.innerText = "Kopyalandı!";
-                btn.style.background = "#10b981";
-                setTimeout(() => { btn.innerText = "Kopyala"; btn.style.background = "var(--accent-2)"; }, 2000);
+                const originalText = btn.innerText;
+                btn.innerText = "KOPYALANDI!";
+                btn.classList.add('bg-emerald-500', 'hover:bg-emerald-400', 'shadow-[0_0_20px_rgba(16,185,129,0.5)]');
+                
+                setTimeout(() => { 
+                    btn.innerText = originalText; 
+                    btn.classList.remove('bg-emerald-500', 'hover:bg-emerald-400', 'shadow-[0_0_20px_rgba(16,185,129,0.5)]');
+                }, 2000);
             });
         }
 
-        // TAM EKRAN MODAL FONKSİYONLARI
         function openModal(element) {
             const modal = document.getElementById("imageModal");
             const fullImg = document.getElementById("fullImg");
-            modal.style.display = "block";
+            
             fullImg.src = element.querySelector("img").src;
+            modal.style.display = "flex";
+            
+            // Animasyon için küçük bir gecikme
+            setTimeout(() => {
+                fullImg.classList.remove('scale-95');
+                fullImg.classList.add('scale-100');
+            }, 10);
         }
     </script>
 </body>
