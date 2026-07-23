@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uthane Script Elite | TS6 & Web Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* --- ELITE PROTOCOL TEMA MOTORU --- */
         :root {
@@ -46,7 +46,12 @@
             --glow-shadow: rgba(234, 179, 8, 0.4);
         }
 
-        /* --- TEMEL AYARLAR --- */
+        /* --- TEMEL AYARLAR VE AKICI KAYDIRMA (SMOOTH SCROLL) --- */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px; /* Üst menünün içeriği kapatmasını engeller */
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-base);
@@ -100,7 +105,7 @@
         .promo-icon { transition: transform 0.4s ease; filter: drop-shadow(0 0 12px var(--glow-shadow)); }
         .promo-card:hover .promo-icon { transform: scale(1.15) rotate(5deg); }
 
-        /* --- GALERİ & MODAL --- */
+        /* --- GALERİ ANİMASYONLARI --- */
         .gallery-item {
             cursor: zoom-in; transition: all 0.4s ease;
             position: relative; overflow: hidden;
@@ -119,6 +124,13 @@
             color: var(--text-main); font-weight: 600; letter-spacing: 0.5px;
         }
         .gallery-item:hover .gallery-cap { transform: translateY(0); }
+
+        /* --- TEMA MENÜSÜ ÖZEL STİL --- */
+        select option {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-weight: 600;
+        }
 
         /* SCROLLBAR */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -144,11 +156,16 @@
                 <a href="#gallery" class="hover:text-[var(--accent-main)] transition-colors">Arayüz</a>
             </div>
 
-            <select id="themeSelect" onchange="changeTheme()" class="bg-black/40 border border-white/10 text-white text-xs font-bold uppercase tracking-wider py-2 px-3 rounded-xl focus:outline-none focus:border-[var(--accent-main)] cursor-pointer transition-colors shadow-inner">
-                <option value="dark" class="bg-slate-900">Elite Dark</option>
-                <option value="cyber" class="bg-slate-900">Cyber Neon</option>
-                <option value="gold" class="bg-slate-900">Royal Gold</option>
-            </select>
+            <div class="relative">
+                <select id="themeSelect" onchange="changeTheme()" class="tech-font bg-black/60 border border-[var(--accent-main)] text-[var(--accent-main)] text-xs font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl focus:outline-none cursor-pointer transition-all shadow-[0_0_15px_var(--glow-shadow)] hover:shadow-[0_0_25px_var(--glow-shadow)] appearance-none pr-8">
+                    <option value="dark">Seçkin Karanlık</option>
+                    <option value="cyber">Siber Neon</option>
+                    <option value="gold">Kraliyet Altını</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-[var(--accent-main)]">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -196,7 +213,7 @@
                     <h3 class="text-xl md:text-2xl font-bold tracking-wide">TeamSpeak 6 <span class="text-[var(--accent-main)] mx-1">❯</span> 31.58.247.163</h3>
                 </div>
                 <div class="w-full md:w-auto md:ml-6 pb-2 md:pb-0 pr-2 md:pr-0">
-                    <a href="https://www.shopier.com/uthanescript" target="_blank" class="block w-full text-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm uppercase tracking-wider py-4 px-8 rounded-xl shadow-[0_10px_20px_rgba(79,70,229,0.3)] transition-all duration-300 border border-white/10 hover:-translate-y-1">
+                    <a href="https://www.shopier.com/uthanescript" target="_blank" class="block w-full text-center bg-gradient-to-r from-[var(--accent-main)] to-[var(--accent-sec)] hover:brightness-110 text-white font-bold text-sm uppercase tracking-wider py-4 px-8 rounded-xl shadow-[0_10px_20px_var(--glow-shadow)] transition-all duration-300 border border-white/10 hover:-translate-y-1">
                         🛒 Shopier İle Güvenli Satın Al
                     </a>
                 </div>
@@ -252,27 +269,28 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                <!-- Data-index attributeları eklendi -->
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(0)">
                     <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/login.png" alt="Giriş Ekranı" class="w-full h-56 object-cover object-top">
                     <div class="gallery-cap">Siber Komuta Giriş Ekranı</div>
                 </div>
-                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(1)">
                     <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/genel-bakis.png" alt="Genel Bakış" class="w-full h-56 object-cover object-top">
                     <div class="gallery-cap">Genel İstatistik Panosu</div>
                 </div>
-                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(2)">
                     <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/oda-yonetimi.png" alt="Oda Yönetimi" class="w-full h-56 object-cover object-top">
                     <div class="gallery-cap">Gelişmiş Oda & Kanal Yönetimi</div>
                 </div>
-                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(3)">
                     <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/roller.png" alt="Rol Yönetimi" class="w-full h-56 object-cover object-top">
                     <div class="gallery-cap">Yetki Grubu (Rol) Düzenleyici</div>
                 </div>
-                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(4)">
                     <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/giris-cikis.png" alt="Kayıtlar" class="w-full h-56 object-cover object-top">
                     <div class="gallery-cap">Detaylı Bağlantı Arşivi</div>
                 </div>
-                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(this)">
+                <div class="gallery-item glass-panel rounded-2xl" onclick="openModal(5)">
                     <img src="https://raw.githubusercontent.com/armandulger177-beep/uthane-ts6-script/main/img/ayarlar.png" alt="Sistem Ayarları" class="w-full h-56 object-cover object-top">
                     <div class="gallery-cap">Kritik Sunucu & Güvenlik Ayarları</div>
                 </div>
@@ -286,19 +304,30 @@
         <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">&copy; 2026 Uthane Script Elite. Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <!-- MODAL -->
-    <div id="imageModal" class="fixed inset-0 z-[1000] hidden bg-black/90 backdrop-blur-md p-4 md:p-10 flex items-center justify-center transition-opacity" onclick="this.style.display='none'">
-        <span class="absolute top-6 right-8 text-white text-5xl font-light cursor-pointer hover:text-[var(--accent-main)] transition-colors">&times;</span>
-        <img id="fullImg" class="max-w-full max-h-[90vh] rounded-xl border border-[var(--card-border)] shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-95 transition-transform duration-300" src="" alt="Fullscreen Image">
+    <!-- SLIDER MODAL -->
+    <div id="imageModal" class="fixed inset-0 z-[1000] hidden bg-black/95 backdrop-blur-md p-4 md:p-10 flex items-center justify-center transition-opacity" onclick="closeModal(event)">
+        
+        <!-- Kapatma Butonu -->
+        <span class="absolute top-6 right-8 text-white/50 hover:text-[var(--accent-main)] text-5xl font-light cursor-pointer transition-colors z-50">&times;</span>
+        
+        <!-- Sol Ok -->
+        <button onclick="changeImage(event, -1)" class="absolute left-2 md:left-8 text-white/30 hover:text-[var(--accent-main)] text-5xl md:text-7xl transition-colors z-50 focus:outline-none drop-shadow-lg">&#10094;</button>
+        
+        <!-- Sağ Ok -->
+        <button onclick="changeImage(event, 1)" class="absolute right-2 md:right-8 text-white/30 hover:text-[var(--accent-main)] text-5xl md:text-7xl transition-colors z-50 focus:outline-none drop-shadow-lg">&#10095;</button>
+
+        <img id="fullImg" class="max-w-full max-h-[90vh] rounded-xl border border-[var(--card-border)] shadow-[0_0_50px_rgba(0,0,0,0.8)] transition-transform duration-300" src="" alt="Fullscreen Image" onclick="event.stopPropagation()">
     </div>
 
     <!-- SCRIPTS -->
     <script>
+        // --- TEMA MOTORU ---
         function changeTheme() {
             const selectedTheme = document.getElementById('themeSelect').value;
             document.body.className = `theme-${selectedTheme} antialiased selection:bg-blue-500/30 transition-colors duration-700`;
         }
 
+        // --- TERMİNAL KOPYALAMA ---
         function copyCode() {
             const code = document.getElementById('codeText').innerText;
             navigator.clipboard.writeText(code).then(() => {
@@ -314,19 +343,67 @@
             });
         }
 
-        function openModal(element) {
+        // --- GALERİ SLIDER MANTIĞI ---
+        let currentImageIndex = 0;
+        const images = [];
+
+        // Sayfa yüklendiğinde tüm galeri resimlerinin linklerini topla
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.gallery-item img').forEach(img => {
+                images.push(img.src);
+            });
+        });
+
+        function openModal(index) {
+            currentImageIndex = index;
             const modal = document.getElementById("imageModal");
             const fullImg = document.getElementById("fullImg");
             
-            fullImg.src = element.querySelector("img").src;
+            fullImg.src = images[currentImageIndex];
             modal.style.display = "flex";
             
-            // Animasyon için küçük bir gecikme
+            // Animasyon efekti
+            fullImg.classList.add('scale-95', 'opacity-0');
             setTimeout(() => {
-                fullImg.classList.remove('scale-95');
-                fullImg.classList.add('scale-100');
+                fullImg.classList.remove('scale-95', 'opacity-0');
+                fullImg.classList.add('scale-100', 'opacity-100');
             }, 10);
         }
+
+        function closeModal(event) {
+            // Sadece arka plana veya çarpıya tıklandığında kapat (resme tıklayınca kapatma)
+            if(event.target.id === 'imageModal' || event.target.tagName === 'SPAN') {
+                document.getElementById("imageModal").style.display = "none";
+            }
+        }
+
+        function changeImage(event, step) {
+            event.stopPropagation(); // Ok'a basınca modalın kapanmasını engeller
+            currentImageIndex += step;
+            
+            // Sınırları kontrol et (Başa/Sona sar)
+            if(currentImageIndex < 0) currentImageIndex = images.length - 1;
+            if(currentImageIndex >= images.length) currentImageIndex = 0;
+            
+            const fullImg = document.getElementById("fullImg");
+            
+            // Kaydırma hissi için anlık opacity düşür-yükselt
+            fullImg.classList.add('opacity-50');
+            setTimeout(() => {
+                fullImg.src = images[currentImageIndex];
+                fullImg.classList.remove('opacity-50');
+            }, 150);
+        }
+
+        // Klavye ile sağ-sol ve ESC kontrolü
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById("imageModal");
+            if (modal.style.display === "flex") {
+                if (e.key === "ArrowLeft") changeImage(e, -1);
+                if (e.key === "ArrowRight") changeImage(e, 1);
+                if (e.key === "Escape") document.getElementById("imageModal").style.display = "none";
+            }
+        });
     </script>
 </body>
 </html>
